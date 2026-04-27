@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Barbería Élite | Reservas Online</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080808;
+      --panel: #111111;
+      --panel-2: #181818;
+      --gold: #d6a84f;
+      --gold-2: #f3d48a;
+      --text: #f7f3ea;
+      --muted: #a7a7a7;
+      --danger: #ff6b6b;
+      --success: #49d17d;
+      --line: rgba(255,255,255,.09);
+      --shadow: 0 24px 80px rgba(0,0,0,.45);
+      --radius: 26px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(214,168,79,.20), transparent 34%),
+        radial-gradient(circle at 80% 20%, rgba(255,255,255,.08), transparent 28%),
+        linear-gradient(135deg, #050505, #101010 48%, #070707);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      width: min(1180px, calc(100% - 32px));
+      margin: auto;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(18px);
+      background: rgba(8,8,8,.72);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+      letter-spacing: -.04em;
+      font-size: 22px;
+    }
+
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--gold), #7a551a);
+      color: #090909;
+      display: grid;
+      place-items: center;
+      font-size: 24px;
+      box-shadow: 0 14px 34px rgba(214,168,79,.22);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .nav-links a:hover { color: var(--gold-2); }
+
+    .btn {
+      border: 0;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 14px 20px;
+      font-weight: 800;
+      font-size: 14px;
+      transition: .2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      color: #111;
+      background: linear-gradient(135deg, var(--gold-2), var(--gold));
+      box-shadow: 0 14px 34px rgba(214,168,79,.22);
+    }
+
+    .btn-primary:hover { transform: translateY(-2px); }
+
+    .btn-ghost {
+      color: var(--text);
+      background: rgba(255,255,255,.07);
+      border: 1px solid var(--line);
+    }
+
+    .btn-ghost:hover { background: rgba(255,255,255,.12); }
+
+    .hero {
+      padding: 82px 0 54px;
+      display: grid;
+      grid-template-columns: 1.08fr .92fr;
+      gap: 42px;
+      align-items: center;
+    }
+
+    .tag {
+      display: inline-flex;
+      padding: 9px 13px;
+      border: 1px solid rgba(214,168,79,.3);
+      border-radius: 999px;
+      color: var(--gold-2);
+      background: rgba(214,168,79,.10);
+      font-weight: 800;
+      font-size: 13px;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(42px, 6vw, 78px);
+      line-height: .94;
+      letter-spacing: -.07em;
+      max-width: 720px;
+    }
+
+    h1 span { color: var(--gold-2); }
+
+    .hero p {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.65;
+      max-width: 640px;
+      margin: 24px 0 30px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 34px;
+      max-width: 620px;
+    }
+
+    .stat {
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 18px;
+    }
+
+    .stat b {
+      display: block;
+      font-size: 25px;
+      color: var(--gold-2);
+      margin-bottom: 4px;
+    }
+
+    .stat small { color: var(--muted); font-weight: 600; }
+
+    .hero-card {
+      min-height: 570px;
+      border-radius: 36px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background:
+        linear-gradient(to bottom, rgba(0,0,0,.05), rgba(0,0,0,.92)),
+        url('https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=900&q=85') center/cover;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .floating-card {
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      bottom: 24px;
+      background: rgba(10,10,10,.75);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 26px;
+      padding: 20px;
+      backdrop-filter: blur(18px);
+    }
+
+    .floating-card h3 { margin: 0 0 8px; font-size: 22px; }
+    .floating-card p { margin: 0; color: var(--muted); line-height: 1.5; }
+
+    section { padding: 58px 0; }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 22px;
+      margin-bottom: 24px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(30px, 4vw, 48px);
+      letter-spacing: -.055em;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.6;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .service-card {
+      background: rgba(255,255,255,.055);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: .2s ease;
+    }
+
+    .service-card:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,.08);
+    }
+
+    .icon {
+      width: 54px;
+      height: 54px;
+      border-radius: 18px;
+      display: grid;
+      place-items: center;
+      background: rgba(214,168,79,.12);
+      border: 1px solid rgba(214,168,79,.25);
+      color: var(--gold-2);
+      font-size: 25px;
+      margin-bottom: 18px;
+    }
+
+    .service-card h3 { margin: 0 0 8px; font-size: 22px; }
+    .service-card p { color: var(--muted); line-height: 1.55; margin: 0 0 18px; }
+    .price { font-size: 28px; font-weight: 900; color: var(--gold-2); }
+
+    .booking-layout {
+      display: grid;
+      grid-template-columns: 1fr .85fr;
+      gap: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      background: rgba(255,255,255,.055);
+      border: 1px solid var(--line);
+      border-radius: 32px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    label {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.24);
+      color: var(--text);
+      border-radius: 18px;
+      padding: 14px 15px;
+      outline: none;
+      font: inherit;
+    }
+
+    option { background: #111; }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: rgba(214,168,79,.6);
+      box-shadow: 0 0 0 4px rgba(214,168,79,.1);
+    }
+
+    .times {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .time-slot {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.055);
+      color: var(--text);
+      padding: 12px 8px;
+      border-radius: 15px;
+      cursor: pointer;
+      font-weight: 800;
+      transition: .18s ease;
+    }
+
+    .time-slot:hover { background: rgba(255,255,255,.10); }
+    .time-slot.active { background: var(--gold); color: #111; }
+    .time-slot.disabled { opacity: .35; cursor: not-allowed; text-decoration: line-through; }
+
+    .summary {
+      background: linear-gradient(145deg, rgba(214,168,79,.15), rgba(255,255,255,.045));
+      border: 1px solid rgba(214,168,79,.22);
+      border-radius: 26px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    .summary h3 { margin: 0 0 14px; }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      color: var(--muted);
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .summary-row:last-child { border-bottom: 0; }
+    .summary-row strong { color: var(--text); text-align: right; }
+
+    .appointments {
+      display: grid;
+      gap: 10px;
+      max-height: 430px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .appointment {
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.20);
+      border-radius: 18px;
+      padding: 14px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .appointment b { display: block; margin-bottom: 4px; }
+    .appointment small { color: var(--muted); }
+
+    .pill {
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 900;
+      background: rgba(73,209,125,.12);
+      color: var(--success);
+      border: 1px solid rgba(73,209,125,.25);
+    }
+
+    .delete {
+      border: 0;
+      background: rgba(255,107,107,.13);
+      color: var(--danger);
+      border: 1px solid rgba(255,107,107,.22);
+      border-radius: 12px;
+      padding: 8px 10px;
+      cursor: pointer;
+      font-weight: 900;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 28px;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(17,17,17,.92);
+      border: 1px solid rgba(214,168,79,.35);
+      color: var(--text);
+      padding: 14px 18px;
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      opacity: 0;
+      pointer-events: none;
+      transition: .25s ease;
+      z-index: 500;
+      font-weight: 800;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      padding: 32px 0;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero, .booking-layout { grid-template-columns: 1fr; }
+      .hero-card { min-height: 420px; }
+      .grid-3 { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .section-head { display: block; }
+      .section-head p { margin-top: 10px; }
+    }
+
+    @media (max-width: 620px) {
+      .stats, .form-grid { grid-template-columns: 1fr; }
+      .times { grid-template-columns: repeat(3, 1fr); }
+      .nav-inner { height: 68px; }
+      .brand { font-size: 18px; }
+      .brand-mark { width: 40px; height: 40px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a href="#inicio" class="brand">
+        <span class="brand-mark">✂</span>
+        Barbería Élite
+      </a>
+      <div class="nav-links">
+        <a href="#servicios">Servicios</a>
+        <a href="#reservar">Reservar</a>
+        <a href="#agenda">Agenda</a>
+        <a href="https://wa.me/51938345478" target="_blank">WhatsApp</a>
+      </div>
+      <button class="btn btn-primary" type="button" onclick="goToSection('reservar')">Reservar ahora</button>
+    </div>
+  </nav>
+
+  <main id="inicio" class="container hero">
+    <div>
+      <span class="tag">💈 Reservas online 24/7</span>
+      <h1>Cortes premium con una agenda <span>ordenada y automática.</span></h1>
+      <p>
+        El cliente elige el servicio, selecciona horario y confirma su cita en segundos.
+        Ideal para barberías que quieren verse profesionales y dejar de perder tiempo coordinando por chat.
+      </p>
+      <div class="hero-actions">
+        <button class="btn btn-primary" type="button" onclick="goToSection('reservar')">Agendar una cita</button>
+        <button class="btn btn-ghost" type="button" onclick="goToSection('servicios')">Ver servicios</button>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>24/7</b><small>Reservas activas</small></div>
+        <div class="stat"><b>0</b><small>Horarios duplicados</small></div>
+        <div class="stat"><b>100%</b><small>Diseño responsive</small></div>
+      </div>
+    </div>
+
+    <div class="hero-card">
+      <div class="floating-card">
+        <h3>Experiencia de reserva moderna</h3>
+        <p>Diseño oscuro, elegante, rápido y adaptable a celular. Perfecto para barberías, salones y estudios de tatuaje.</p>
+      </div>
+    </div>
+  </main>
+
+  <section id="servicios">
+    <div class="container">
+      <div class="section-head">
+        <h2>Servicios destacados</h2>
+        <p>El cliente puede escoger el servicio antes de reservar. Puedes cambiar precios, nombres y duración según cada barbería.</p>
+      </div>
+      <div class="grid-3">
+        <article class="service-card">
+          <div class="icon">💇‍♂️</div>
+          <h3>Corte clásico</h3>
+          <p>Corte personalizado con acabado profesional y estilo limpio.</p>
+          <div class="price">S/ 25</div>
+          <button class="btn btn-ghost" type="button" style="width:100%; margin-top:18px;" onclick="selectServiceAndBook('Corte clásico|25|40')">Reservar corte</button>
+        </article>
+        <article class="service-card">
+          <div class="icon">🧔</div>
+          <h3>Barba premium</h3>
+          <p>Perfilado, navaja, hidratación y acabado elegante.</p>
+          <div class="price">S/ 20</div>
+          <button class="btn btn-ghost" type="button" style="width:100%; margin-top:18px;" onclick="selectServiceAndBook('Barba premium|20|30')">Reservar barba</button>
+        </article>
+        <article class="service-card">
+          <div class="icon">👑</div>
+          <h3>Combo completo</h3>
+          <p>Corte + barba + styling. La opción más vendida.</p>
+          <div class="price">S/ 40</div>
+          <button class="btn btn-primary" type="button" style="width:100%; margin-top:18px;" onclick="selectServiceAndBook('Combo completo|40|60')">Reservar combo</button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="reservar">
+    <div class="container">
+      <div class="section-head">
+        <h2>Reserva tu cita</h2>
+        <p>Demo funcional con bloqueo de horarios ocupados. Los datos quedan guardados en el navegador para mostrar el sistema al cliente.</p>
+      </div>
+
+      <div class="booking-layout">
+        <div class="panel">
+          <form id="bookingForm">
+            <div class="form-grid">
+              <div>
+                <label for="name">Nombre del cliente</label>
+                <input id="name" type="text" placeholder="Ej: Carlos Mendoza" required />
+              </div>
+              <div>
+                <label for="phone">Teléfono / WhatsApp</label>
+                <input id="phone" type="tel" placeholder="Ej: 999 999 999" required />
+              </div>
+              <div>
+                <label for="service">Servicio</label>
+                <select id="service" required>
+                  <option value="Corte clásico|25|40">Corte clásico - S/25</option>
+                  <option value="Barba premium|20|30">Barba premium - S/20</option>
+                  <option value="Combo completo|40|60">Combo completo - S/40</option>
+                  <option value="Corte + diseño|35|50">Corte + diseño - S/35</option>
+                </select>
+              </div>
+              <div>
+                <label for="date">Fecha</label>
+                <input id="date" type="date" required />
+              </div>
+            </div>
+
+            <div style="margin-top:16px;">
+              <label>Horario disponible</label>
+              <div id="timeSlots" class="times"></div>
+            </div>
+
+            <div style="margin-top:16px;">
+              <label for="notes">Comentario opcional</label>
+              <textarea id="notes" rows="3" placeholder="Ej: Quiero degradado bajo"></textarea>
+            </div>
+
+            <button class="btn btn-primary" style="width:100%; margin-top:18px;" type="submit">
+              Confirmar reserva
+            </button>
+            <button class="btn btn-ghost" style="width:100%; margin-top:10px;" type="button" onclick="resetFormOnly()">
+              Limpiar formulario
+            </button>
+          </form>
+        </div>
+
+        <aside class="panel">
+          <div class="summary">
+            <h3>Resumen de reserva</h3>
+            <div class="summary-row"><span>Servicio</span><strong id="sumService">Corte clásico</strong></div>
+            <div class="summary-row"><span>Precio</span><strong id="sumPrice">S/ 25</strong></div>
+            <div class="summary-row"><span>Duración</span><strong id="sumDuration">40 min</strong></div>
+            <div class="summary-row"><span>Fecha</span><strong id="sumDate">Selecciona fecha</strong></div>
+            <div class="summary-row"><span>Hora</span><strong id="sumTime">Selecciona hora</strong></div>
+          </div>
+          <button id="whatsappPreview" class="btn btn-ghost" style="width:100%;" type="button">
+            Enviar consulta por WhatsApp
+          </button>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section id="agenda">
+    <div class="container">
+      <div class="section-head">
+        <h2>Panel del barbero</h2>
+        <p>Vista simple para revisar reservas confirmadas. En la versión final esto se conecta con Firebase o Supabase.</p>
+      </div>
+      <div class="panel">
+        <div style="display:flex; justify-content:space-between; gap:14px; align-items:center; margin-bottom:16px; flex-wrap:wrap;">
+          <div>
+            <h3 style="margin:0 0 4px; font-size:24px;">Citas registradas</h3>
+            <small style="color:var(--muted);">Puedes cancelar citas para liberar horarios.</small>
+          </div>
+          <button id="clearAll" class="btn btn-ghost" type="button">Limpiar demo</button>
+        </div>
+        <div id="appointments" class="appointments"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      Barbería Élite © 2026 — Sistema demo de reservas para vender a negocios locales.
+    </div>
+  </footer>
+
+  <div id="toast" class="toast">Reserva confirmada</div>
+
+  <script>
+    const $ = (selector) => document.querySelector(selector);
+
+    function goToSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (section) section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function selectServiceAndBook(serviceValue) {
+      $('#service').value = serviceValue;
+      selectedTime = '';
+      renderTimeSlots();
+      updateSummary();
+      goToSection('reservar');
+      showToast('Servicio seleccionado');
+    }
+
+    function resetFormOnly() {
+      $('#bookingForm').reset();
+      $('#date').value = today.toISOString().split('T')[0];
+      selectedTime = '';
+      renderTimeSlots();
+      updateSummary();
+      showToast('Formulario limpio');
+    }
+
+    function openWhatsApp() {
+      const service = getServiceData();
+      const name = $('#name').value.trim() || 'Cliente';
+      const phone = $('#phone').value.trim() || 'Sin teléfono';
+      const date = formatDate($('#date').value);
+      const hour = selectedTime || 'Por confirmar';
+      const notes = $('#notes').value.trim() || 'Sin comentario';
+      const text = `Hola, quiero reservar una cita.%0A%0ACliente: ${name}%0ATeléfono: ${phone}%0AServicio: ${service.name}%0APrecio: S/ ${service.price}%0AFecha: ${date}%0AHora: ${hour}%0AComentario: ${notes}`;
+      window.open(`https://wa.me/51938345478?text=${text}`, '_blank');
+    }
+
+    const timeSlots = [
+      '09:00', '09:40', '10:20', '11:00',
+      '11:40', '12:20', '14:00', '14:40',
+      '15:20', '16:00', '16:40', '17:20',
+      '18:00', '18:40', '19:20', '20:00'
+    ];
+
+    let selectedTime = '';
+    let bookings = JSON.parse(localStorage.getItem('barberBookings') || '[]');
+
+    const dateInput = $('#date');
+    const today = new Date();
+    dateInput.min = today.toISOString().split('T')[0];
+    dateInput.value = today.toISOString().split('T')[0];
+
+    function getServiceData() {
+      const [name, price, duration] = $('#service').value.split('|');
+      return { name, price, duration };
+    }
+
+    function formatDate(dateValue) {
+      if (!dateValue) return 'Selecciona fecha';
+      const [year, month, day] = dateValue.split('-');
+      return `${day}/${month}/${year}`;
+    }
+
+    function saveBookings() {
+      localStorage.setItem('barberBookings', JSON.stringify(bookings));
+    }
+
+    function showToast(message) {
+      const toast = $('#toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2400);
+    }
+
+    function updateSummary() {
+      const service = getServiceData();
+      $('#sumService').textContent = service.name;
+      $('#sumPrice').textContent = `S/ ${service.price}`;
+      $('#sumDuration').textContent = `${service.duration} min`;
+      $('#sumDate').textContent = formatDate($('#date').value);
+      $('#sumTime').textContent = selectedTime || 'Selecciona hora';
+    }
+
+    function renderTimeSlots() {
+      const selectedDate = $('#date').value;
+      const container = $('#timeSlots');
+      container.innerHTML = '';
+
+      timeSlots.forEach(time => {
+        const isTaken = bookings.some(b => b.date === selectedDate && b.time === time);
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.textContent = time;
+        button.className = 'time-slot';
+
+        if (isTaken) {
+          button.classList.add('disabled');
+          button.title = 'Horario ocupado';
+        }
+
+        if (selectedTime === time && !isTaken) {
+          button.classList.add('active');
+        }
+
+        button.addEventListener('click', () => {
+          if (isTaken) return;
+          selectedTime = time;
+          renderTimeSlots();
+          updateSummary();
+        });
+
+        container.appendChild(button);
+      });
+    }
+
+    function renderAppointments() {
+      const container = $('#appointments');
+      container.innerHTML = '';
+
+      const sortedBookings = [...bookings].sort((a, b) => {
+        return `${a.date} ${a.time}`.localeCompare(`${b.date} ${b.time}`);
+      });
+
+      if (sortedBookings.length === 0) {
+        container.innerHTML = `
+          <div class="appointment">
+            <div>
+              <b>No hay citas registradas</b>
+              <small>Cuando un cliente reserve, aparecerá aquí.</small>
+            </div>
+            <span class="pill">Libre</span>
+          </div>
+        `;
+        return;
+      }
+
+      sortedBookings.forEach(booking => {
+        const item = document.createElement('div');
+        item.className = 'appointment';
+        item.innerHTML = `
+          <div>
+            <b>${booking.time} — ${booking.name}</b>
+            <small>${formatDate(booking.date)} · ${booking.service} · S/ ${booking.price} · ${booking.phone}</small>
+          </div>
+          <button class="delete" type="button" aria-label="Cancelar cita">✕</button>
+        `;
+
+        item.querySelector('button').addEventListener('click', () => {
+          bookings = bookings.filter(b => b.id !== booking.id);
+          saveBookings();
+          if (selectedTime === booking.time) selectedTime = '';
+          renderTimeSlots();
+          renderAppointments();
+          updateSummary();
+          showToast('Cita cancelada');
+        });
+
+        container.appendChild(item);
+      });
+    }
+
+    $('#bookingForm').addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      if (!selectedTime) {
+        showToast('Selecciona un horario disponible');
+        return;
+      }
+
+      const service = getServiceData();
+      const selectedDate = $('#date').value;
+      const alreadyTaken = bookings.some(b => b.date === selectedDate && b.time === selectedTime);
+
+      if (alreadyTaken) {
+        showToast('Ese horario acaba de ocuparse');
+        renderTimeSlots();
+        return;
+      }
+
+      bookings.push({
+        id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
+        name: $('#name').value.trim(),
+        phone: $('#phone').value.trim(),
+        service: service.name,
+        price: service.price,
+        duration: service.duration,
+        date: selectedDate,
+        time: selectedTime,
+        notes: $('#notes').value.trim(),
+        createdAt: new Date().toISOString()
+      });
+
+      saveBookings();
+      $('#bookingForm').reset();
+      $('#date').value = today.toISOString().split('T')[0];
+      selectedTime = '';
+      renderTimeSlots();
+      renderAppointments();
+      updateSummary();
+      showToast('Reserva confirmada correctamente');
+    });
+
+    $('#service').addEventListener('change', updateSummary);
+    $('#date').addEventListener('change', () => {
+      selectedTime = '';
+      renderTimeSlots();
+      updateSummary();
+    });
+
+    $('#clearAll').addEventListener('click', () => {
+      const confirmDelete = confirm('¿Seguro que quieres borrar todas las citas de la demo?');
+      if (!confirmDelete) return;
+      bookings = [];
+      selectedTime = '';
+      saveBookings();
+      renderTimeSlots();
+      renderAppointments();
+      updateSummary();
+      showToast('Demo limpiada');
+    });
+
+    $('#whatsappPreview').addEventListener('click', openWhatsApp);
+
+    renderTimeSlots();
+    renderAppointments();
+    updateSummary();
+  </script>
+</body>
+</html>
